@@ -1,148 +1,45 @@
-# EXERCISE – 13 (K-MEANS CLUSTERING)
+# Exercise 13 — K-Means Clustering
 
-## Code
+**Course:** Machine Learning Lab  
+**Programme:** I M.Sc. Data Science · I Semester  
+**Department Number:** 26-PDS-002  
+**Student:** Joe Rakesh A · Loyola College, Chennai  
+**Academic Year:** 2026–2027
 
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
+## 1. Aim
+Perform K-Means clustering on the heart disease dataset and use the Elbow Method to choose a suitable number of clusters.
 
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.cluster import KMeans
+## 2. Dataset
+- **Expected path:** `heart_disease_dataset.csv`
+- Obtain the dataset from an authorised source. Do not commit data that cannot legally be redistributed.
+- See the [dataset guide](../datasets/README.md).
 
-df = pd.read_csv("heart_disease_dataset.csv")
+## 3. Algorithm / Workflow
+1. Load data and remove the Heart Disease target.
+2. Scale numeric features and one-hot encode categorical features.
+3. Run K-Means for K=1 through 10 and record inertia.
+4. Plot the Elbow curve.
+5. Fit the final model with selected K.
+6. Add cluster labels and count records per cluster.
 
-print("Dataset Shape:", df.shape)
-print("\nFirst 5 records:")
-print(df.head())
+## 4. Implementation
+- [Original Python program](./ex-13.py)
+- [Jupyter notebook](./ex-13.ipynb)
 
-X = df.drop("Heart Disease", axis=1)
+The Python program is preserved as-is. The notebook splits its existing code into executable cells; it does not replace the original implementation.
 
-numeric_features = X.select_dtypes(
-    include=["int64", "float64"]
-).columns
+## 5. Results
+**Result summary transcribed from the supplied practical record:**
 
-categorical_features = X.select_dtypes(
-    include=["object"]
-).columns
+The practical record identifies K=3 as suitable; 1000 records were grouped into clusters of 308, 337 and 355.
 
-preprocessor = ColumnTransformer(
-    transformers=[
-        ("num", StandardScaler(), numeric_features),
-        ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_features)
-    ]
-)
+This is a recorded result, not a fresh run performed during this update. Run the notebook with the correct dataset and dependencies to generate current outputs and plots.
 
-X_processed = preprocessor.fit_transform(X)
+## 6. Interpretation and validation
+Interpret outputs from your run and document limitations. Check preprocessing, feature scaling, distance/linkage parameters and cluster interpretation as relevant to the method.
 
-# Check whether X_processed is sparse or already a NumPy array
-if hasattr(X_processed, "toarray"):
-    X_processed = X_processed.toarray()
+## 7. Conclusion
+Summarise findings from your execution; do not report metrics that were not computed.
 
-print("\nProcessed Data Shape:")
-print(X_processed.shape)
-
-# ------------------------------------------------------------
-# Step 7: Apply Elbow Method
-# ------------------------------------------------------------
-
-inertia = []
-
-K = range(1, 11)
-
-for k in K:
-
-    kmeans = KMeans(
-        n_clusters=k,
-        random_state=42,
-        n_init=10
-    )
-
-    kmeans.fit(X_processed)
-
-    inertia.append(kmeans.inertia_)
-
-plt.figure(figsize=(8, 5))
-
-plt.plot(
-    K,
-    inertia,
-    marker="o"
-)
-
-plt.xlabel("Number of Clusters (K)")
-plt.ylabel("Inertia")
-plt.title("Elbow Method for Optimal K")
-
-plt.xticks(K)
-
-plt.grid(True)
-
-plt.show()
-
-# Change this value after observing the elbow plot.
-optimal_k = 3
-
-print("\nSelected Optimal K:", optimal_k)
-
-kmeans = KMeans(
-    n_clusters=optimal_k,
-    random_state=42,
-    n_init=10
-)
-
-clusters = kmeans.fit_predict(X_processed)
-
-df["Cluster"] = clusters
-
-print("\nClustered Dataset:")
-print(df.head(10))
-
-print("\nNumber of records in each cluster:")
-print(df["Cluster"].value_counts().sort_index())
-```
-
-## Output
-
-```text
-The program was executed on the Heart disease dataset (heart_disease_dataset.csv) and produced the following output:
-
-Dataset Shape: (1000, 16)
-
-First 5 records:
-   Age  Gender  ...   Chest Pain Type  Heart Disease
-0   75  Female  ...   Atypical Angina              1
-1   48    Male  ...    Typical Angina              0
-2   53    Male  ...   Atypical Angina              1
-3   69  Female  ...  Non-anginal Pain              0
-4   62  Female  ...      Asymptomatic              0
-
-[5 rows x 16 columns]
-
-Processed Data Shape:
-(1000, 27)
-
-Selected Optimal K: 3
-
-Clustered Dataset:
-   Age  Gender  Cholesterol  ...   Chest Pain Type  Heart Disease Cluster
-0   75  Female          228  ...   Atypical Angina              1       0
-1   48    Male          204  ...    Typical Angina              0       1
-2   53    Male          234  ...   Atypical Angina              1       0
-3   69  Female          192  ...  Non-anginal Pain              0       1
-4   62  Female          172  ...      Asymptomatic              0       0
-5   77    Male          309  ...      Asymptomatic              1       0
-6   64  Female          211  ...    Typical Angina              1       1
-7   60  Female          208  ...      Asymptomatic              1       1
-8   37  Female          317  ...  Non-anginal Pain              0       2
-9   63    Male          204  ...      Asymptomatic              1       1
-
-[10 rows x 17 columns]
-
-Number of records in each cluster:
-Cluster
-0    308
-1    337
-2    355
-Name: count, dtype: int64
-```
+## 8. Reproducibility
+Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
