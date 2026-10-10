@@ -1,0 +1,48 @@
+name: Python syntax checks
+
+on:
+  push:
+    paths:
+      - "ex-*/**.py"
+      - ".github/workflows/python-checks.yml"
+  pull_request:
+    paths:
+      - "ex-*/**.py"
+      - ".github/workflows/python-checks.yml"
+  workflow_dispatch:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile Python scripts without executing datasets
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import py_compile
+          import sys
+
+          files = sorted(Path(".").glob("ex-*/*.py"))
+          if not files:
+              print("No exercise Python files found.")
+              sys.exit(1)
+
+          failed = []
+          for file in files:
+              try:
+                  py_compile.compile(str(file), doraise=True)
+                  print(f"OK: {file}")
+              except py_compile.PyCompileError as exc:
+                  failed.append((file, str(exc)))
+                  print(f"FAIL: {file}\n{exc}")
+
+          if failed:
+              sys.exit(1)
+          print(f"\nChecked {len(files)} Python files.")
+          PY
