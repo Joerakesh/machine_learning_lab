@@ -93,16 +93,47 @@ jobs:
 
       - name: Commit executed notebooks with outputs
         if: success()
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ex-*/*.ipynb
-          if git diff --cached --quiet; then
-            echo "No notebook output changes to commit."
-          else
+
+          # Remember the exact source revision these notebooks were executed from.
+          source_sha="$(git rev-parse HEAD)"
+
+          for attempt in 1 2 3; do
+            echo "Push attempt $attempt/3: fetching latest main..."
+            git fetch origin main
+
+            # Never publish outputs generated from stale notebooks over newer source.
+            if git diff --name-only "$source_sha" origin/main -- 'ex-*/*.ipynb' | grep -q .; then
+              echo "Notebook sources changed on origin/main while execution was running."
+              echo "Keeping the executed notebooks in the workflow artifact instead of overwriting newer source."
+              exit 0
+            fi
+
+            # Move the local branch to the latest remote commit while preserving
+            # the generated notebook files in the working tree.
+            git reset --mixed origin/main
+            git add ex-*/*.ipynb
+
+            if git diff --cached --quiet; then
+              echo "No notebook output changes to commit."
+              exit 0
+            fi
+
             git commit -m "Add executed notebook outputs"
-            git push
-          fi
+            if git push origin HEAD:main; then
+              echo "Executed notebook outputs pushed successfully."
+              exit 0
+            fi
+
+            echo "Push raced with another update; retrying after fetching main..."
+          done
+
+          echo "Could not push notebook outputs after 3 attempts. The artifact is still available."
+          exit 1
 
       - name: Upload executed notebooks as downloadable artifact
         if: always()
