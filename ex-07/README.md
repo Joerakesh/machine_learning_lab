@@ -1,312 +1,47 @@
-# EXERCISE – 07 (LOGISTIC REGRESSION)
+# Exercise 07 — Logistic Regression
 
-## Code
+**Course:** Machine Learning Lab  
+**Programme:** I M.Sc. Data Science · I Semester  
+**Department Number:** 26-PDS-002  
+**Student:** Joe Rakesh A · Loyola College, Chennai  
+**Academic Year:** 2026–2027
 
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
+## 1. Aim
+Implement Logistic Regression for binary heart disease classification and evaluate it using classification metrics and ROC-AUC.
 
-from sklearn.model_selection import train_test_split
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import MinMaxScaler
+## 2. Dataset
+- **Expected path:** `heart_disease_dataset.csv`
+- Obtain the dataset from an authorised source. Do not commit data that cannot legally be redistributed.
+- See the [dataset guide](../datasets/README.md).
 
-from sklearn.linear_model import LogisticRegression
+## 3. Algorithm / Workflow
+1. Load the heart disease data and separate the Heart Disease target.
+2. Identify numeric and categorical columns; impute missing values with the most frequent value.
+3. Encode categorical columns.
+4. Split 80:20 with random_state=42.
+5. Train LogisticRegression(max_iter=1000).
+6. Calculate accuracy, precision, recall and F1.
+7. Display the confusion matrix and classification report.
+8. Plot the ROC curve and calculate ROC-AUC.
 
-from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    confusion_matrix,
-    classification_report,
-    roc_curve,
-    auc
-)
+## 4. Implementation
+- [Original Python program](./ex-07.py)
+- [Jupyter notebook](./ex-07.ipynb)
 
-df = pd.read_csv("heart_disease_dataset.csv")
+The Python program is preserved as-is. The notebook splits its existing code into executable cells; it does not replace the original implementation.
 
-print("First 5 rows:")
-print(df.head())
+## 5. Results
+**Result summary transcribed from the supplied practical record:**
 
-print("\nDataset Shape:")
-print(df.shape)
+The record reports accuracy 86.5%, precision 0.8493, recall 0.7949, F1 0.8212 and ROC-AUC 0.9505 on the test set.
 
-X = df.drop("Heart Disease", axis=1)
-y = df["Heart Disease"]
+This is a recorded result, not a fresh run performed during this update. Run the notebook with the correct dataset and dependencies to generate current outputs and plots.
 
-print("\nFeatures:")
-print(X.columns)
+## 6. Interpretation and validation
+Interpret outputs from your run and document limitations. Check for leakage, duplicates and evaluation design before interpreting unexpectedly high classification scores as generalisable.
 
-print("\nTarget:")
-print(y.name)
+## 7. Conclusion
+Summarise findings from your execution; do not report metrics that were not computed.
 
-categorical_columns = X.select_dtypes(
-    include=["object"]
-).columns
-
-numerical_columns = X.select_dtypes(
-    exclude=["object"]
-).columns
-
-print("\nCategorical Columns:")
-print(list(categorical_columns))
-
-print("\nNumerical Columns:")
-print(list(numerical_columns))
-
-imputer = SimpleImputer(strategy="most_frequent")
-
-X[categorical_columns] = imputer.fit_transform(
-    X[categorical_columns]
-)
-
-print("\nMissing values after imputation:")
-print(X.isnull().sum())
-
-label_encoders = {}
-
-for column in categorical_columns:
-
-    encoder = LabelEncoder()
-
-    X[column] = encoder.fit_transform(
-        X[column]
-    )
-
-    label_encoders[column] = encoder
-
-print("\nData after Label Encoding:")
-print(X.head())
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X,
-    y,
-    test_size=0.20,
-    random_state=42,
-    stratify=y
-)
-
-print("\nTraining data:", X_train.shape)
-print("Testing data :", X_test.shape)
-
-scaler = StandardScaler()
-
-X_train_scaled = scaler.fit_transform(X_train)
-
-X_test_scaled = scaler.transform(X_test)
-
-# minmax_scaler = MinMaxScaler()
-
-# X_train_scaled = minmax_scaler.fit_transform(X_train)
-
-# X_test_scaled = minmax_scaler.transform(X_test)
-
-model = LogisticRegression(
-    max_iter=1000,
-    random_state=42
-)
-model.fit(
-    X_train_scaled,
-    y_train
-)
-
-print("\nLogistic Regression model trained successfully.")
-
-y_pred = model.predict(X_test_scaled)
-# Probability of class 1
-y_probability = model.predict_proba(X_test_scaled)[:, 1]
-
-accuracy = accuracy_score(
-    y_test,
-    y_pred
-)
-
-precision = precision_score(
-    y_test,
-    y_pred
-)
-
-recall = recall_score(
-    y_test,
-    y_pred
-)
-
-f1 = f1_score(
-    y_test,
-    y_pred
-)
-
-print("\n================================")
-print("CLASSIFICATION METRICS")
-print("================================")
-
-print("Accuracy  :", round(accuracy, 4))
-print("Precision :", round(precision, 4))
-print("Recall    :", round(recall, 4))
-print("F1 Score  :", round(f1, 4))
-
-cm = confusion_matrix(
-    y_test,
-    y_pred
-)
-
-print("\nConfusion Matrix:")
-print(cm)
-
-print("\nClassification Report:")
-print(
-    classification_report(
-        y_test,
-        y_pred
-    )
-)
-
-# ============================================
-# 15. ROC Curve
-# ============================================
-
-fpr, tpr, thresholds = roc_curve(
-    y_test,
-    y_probability
-)
-
-# ============================================
-# 16. Calculate AUC
-# ============================================
-
-roc_auc = auc(
-    fpr,
-    tpr
-)
-
-print("\nROC-AUC Score:",
-      round(roc_auc, 4))
-
-# ============================================
-# 17. Plot ROC Curve
-# ============================================
-
-plt.figure(figsize=(8, 6))
-
-plt.plot(
-    fpr,
-    tpr,
-    label="Logistic Regression (AUC = {:.3f})".format(
-        roc_auc
-    )
-)
-
-# Random classifier line
-plt.plot(
-    [0, 1],
-    [0, 1],
-    linestyle="--",
-    label="Random Classifier"
-)
-
-plt.xlabel("False Positive Rate")
-plt.ylabel("True Positive Rate")
-
-plt.title(
-    "ROC Curve - Heart Disease Prediction"
-)
-
-plt.legend()
-
-plt.grid()
-```
-
-## Output
-
-```text
-The program was executed on the Heart disease dataset (heart_disease_dataset.csv) and produced the following output:
-
-First 5 rows:
-   Age  Gender  ...   Chest Pain Type  Heart Disease
-0   75  Female  ...   Atypical Angina              1
-1   48    Male  ...    Typical Angina              0
-2   53    Male  ...   Atypical Angina              1
-3   69  Female  ...  Non-anginal Pain              0
-4   62  Female  ...      Asymptomatic              0
-
-[5 rows x 16 columns]
-
-Dataset Shape:
-(1000, 16)
-
-Features:
-Index(['Age', 'Gender', 'Cholesterol', 'Blood Pressure', 'Heart Rate',
-       'Smoking', 'Alcohol Intake', 'Exercise Hours', 'Family History',
-       'Diabetes', 'Obesity', 'Stress Level', 'Blood Sugar',
-       'Exercise Induced Angina', 'Chest Pain Type'],
-      dtype='object')
-
-Target:
-Heart Disease
-
-Categorical Columns:
-['Gender', 'Smoking', 'Alcohol Intake', 'Family History', 'Diabetes', 'Obesity', 'Exercise Induced Angina', 'Chest Pain Type']
-
-Numerical Columns:
-['Age', 'Cholesterol', 'Blood Pressure', 'Heart Rate', 'Exercise Hours', 'Stress Level', 'Blood Sugar']
-
-Missing values after imputation:
-Age                        0
-Gender                     0
-Cholesterol                0
-Blood Pressure             0
-Heart Rate                 0
-Smoking                    0
-Alcohol Intake             0
-Exercise Hours             0
-Family History             0
-Diabetes                   0
-Obesity                    0
-Stress Level               0
-Blood Sugar                0
-Exercise Induced Angina    0
-Chest Pain Type            0
-dtype: int64
-
-Data after Label Encoding:
-   Age  Gender  ...  Exercise Induced Angina  Chest Pain Type
-0   75       0  ...                        1                1
-1   48       1  ...                        1                3
-2   53       1  ...                        1                1
-3   69       0  ...                        1                2
-4   62       0  ...                        1                0
-
-[5 rows x 15 columns]
-
-Training data: (800, 15)
-Testing data : (200, 15)
-
-Logistic Regression model trained successfully.
-
-================================
-CLASSIFICATION METRICS
-================================
-Accuracy  : 0.865
-Precision : 0.8493
-Recall    : 0.7949
-F1 Score  : 0.8212
-
-Confusion Matrix:
-[[111  11]
- [ 16  62]]
-
-Classification Report:
-              precision    recall  f1-score   support
-
-           0       0.87      0.91      0.89       122
-           1       0.85      0.79      0.82        78
-
-    accuracy                           0.86       200
-   macro avg       0.86      0.85      0.86       200
-weighted avg       0.86      0.86      0.86       200
-
-
-ROC-AUC Score: 0.9505
-```
+## 8. Reproducibility
+Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
