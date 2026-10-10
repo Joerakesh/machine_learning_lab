@@ -31,18 +31,69 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install nbconvert ipykernel
 
-      - name: Execute notebooks and save outputs
+      - name: Execute notebooks when their datasets exist
+        id: execute
+        shell: bash
         run: |
-          set -e
+          set -uo pipefail
           mkdir -p executed-notebooks
-          for notebook in ex-*/*.ipynb; do
-            echo "Executing $notebook"
-            output="$(basename "$(dirname "$notebook")").ipynb"
-            jupyter nbconvert --to notebook --execute "$notebook" --output "$output" --output-dir executed-notebooks --ExecutePreprocessor.timeout=600
-            cp "executed-notebooks/$output" "$notebook"
-          done
+          failures=0
+          executed=0
+          skipped=0
 
-      - name: Commit notebooks with rendered outputs
+          while IFS= read -r notebook; do
+            folder="$(basename "$(dirname "$notebook")")"
+            case "$folder" in
+              ex-01-exploratory-data-analysis) dataset="Dataset/titanic.csv" ;;
+              ex-02-simple-linear-regression) dataset="Dataset/Salary.csv" ;;
+              ex-03-multiple-linear-regression) dataset="Dataset/Housing.csv" ;;
+              ex-04-polynomial-regression) dataset="Dataset/fish.csv" ;;
+              ex-05-ridge-regression|ex-06-lasso-regression) dataset="Housing.csv" ;;
+              ex-*) dataset="heart_disease_dataset.csv" ;;
+              *) continue ;;
+            esac
+
+            if [[ ! -f "$dataset" ]]; then
+              echo "SKIPPED: $notebook — missing dataset: $dataset"
+              echo "- Skipped `$folder`: missing `$dataset`" >> "$GITHUB_STEP_SUMMARY"
+              skipped=$((skipped + 1))
+              continue
+            fi
+
+            output="${folder}.ipynb"
+            echo "Executing $notebook (dataset: $dataset)"
+            if jupyter nbconvert --to notebook --execute "$notebook" \
+              --output "$output" --output-dir executed-notebooks \
+              --ExecutePreprocessor.timeout=600; then
+              cp "executed-notebooks/$output" "$notebook"
+              echo "SUCCESS: $notebook"
+              echo "- Passed: `$folder`" >> "$GITHUB_STEP_SUMMARY"
+              executed=$((executed + 1))
+            else
+              echo "FAILED: $notebook"
+              echo "- **Failed:** `$folder` (see job logs)" >> "$GITHUB_STEP_SUMMARY"
+              failures=$((failures + 1))
+            fi
+          done < <(find ex-* -maxdepth 1 -type f -name '*.ipynb' -print | sort)
+
+          {
+            echo ""
+            echo "### Notebook execution summary"
+            echo "- Executed successfully: $executed"
+            echo "- Skipped (dataset missing): $skipped"
+            echo "- Failed: $failures"
+            echo "- Executed notebooks are uploaded as a workflow artifact when available."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if (( executed == 0 )); then
+            echo "No notebooks were executed. Upload the required datasets with the expected filenames and paths."
+          fi
+          if (( failures > 0 )); then
+            exit 1
+          fi
+
+      - name: Commit executed notebooks with outputs
+        if: success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -54,7 +105,7 @@ jobs:
             git push
           fi
 
-      - name: Upload executed notebooks as backup artifacts
+      - name: Upload executed notebooks as downloadable artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
