@@ -5,6 +5,7 @@ on:
     paths:
       - "Dataset/**"
       - "datasets/**"
+      - "*.csv"
       - ".github/workflows/python-checks.yml"
       - ".github/workflows/execute-notebooks.yml"
   workflow_dispatch:
@@ -39,7 +40,7 @@ jobs:
           set -e
           for notebook in ex-*/*.ipynb; do
             echo "Executing $notebook"
-            output="executed-notebooks/$(basename "$(dirname "$notebook")").ipynb"
+            output="$(basename "$(dirname "$notebook")").ipynb"
             jupyter nbconvert --to notebook --execute "$notebook" --output "$output" --output-dir executed-notebooks --ExecutePreprocessor.timeout=600
           done
 
