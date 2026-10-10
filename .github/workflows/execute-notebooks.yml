@@ -43,6 +43,7 @@ jobs:
           cp datasets/heart_disease_dataset.csv heart_disease_dataset.csv
           echo "Dataset files prepared:"
           ls -l Dataset Housing.csv heart_disease_dataset.csv
+          echo "Workspace: $GITHUB_WORKSPACE"
 
       - name: Execute notebooks and save outputs
         shell: bash
@@ -55,10 +56,10 @@ jobs:
           while IFS= read -r notebook; do
             folder="$(basename "$(dirname "$notebook")")"
             output="${folder}.ipynb"
-            echo "Executing $notebook from repository root"
+            echo "Executing $notebook with cwd=$GITHUB_WORKSPACE"
             if jupyter nbconvert --to notebook --execute "$notebook" \
               --output "$output" --output-dir executed-notebooks \
-              --ExecutePreprocessor.cwd=. \
+              --ExecutePreprocessor.cwd="$GITHUB_WORKSPACE" \
               --ExecutePreprocessor.timeout=600; then
               cp "executed-notebooks/$output" "$notebook"
               echo "SUCCESS: $notebook"
