@@ -92,7 +92,7 @@ For a consistent postgraduate lab record, each exercise page should provide:
 6. **Evaluation** — Suitable metrics such as MAE/RMSE/R² for regression, precision/recall/F1/confusion matrix for classification, or appropriate cluster analysis for clustering.
 7. **Interpretation and limitations** — What the results indicate, assumptions, limitations, and a concise conclusion.
 
-Report only results produced by running the program with the documented dataset and environment. Do not infer or invent scores or outputs.
+Use the [experiment README template](EXERCISE_README_TEMPLATE.md) as a guide. Report only results produced by running the program with the documented dataset and environment. Do not infer or invent scores or outputs.
 
 ## Results and visualizations
 
@@ -106,6 +106,8 @@ Ensure screenshots and plots correspond to the current code and dataset. Avoid c
 
 ## Data and reproducibility
 
+See the [dataset guide](datasets/README.md) for expected file paths and sourcing notes.
+
 - Use only datasets you are allowed to redistribute; otherwise document the source and download instructions.
 - Record relevant package versions when reproducibility matters.
 - Fix random seeds where the experiment already uses them.
@@ -113,17 +115,16 @@ Ensure screenshots and plots correspond to the current code and dataset. Avoid c
 - Treat unusually perfect model scores as a prompt to investigate data leakage, target construction, duplicate records, and evaluation design—not as proof of a perfect real-world model.
 - Keep original practical code unchanged when adding documentation or notebooks; clearly disclose any separate exploratory analysis.
 
-## Suggested development workflow
+## GitHub workflow
 
-- Keep one clearly named branch for each meaningful change.
-- Use GitHub Issues to track missing outputs, documentation tasks, and reproducibility problems.
+- Use Issues to track missing outputs, documentation tasks, and reproducibility problems.
 - Use pull requests to review significant changes, even when working independently.
-- Use GitHub Actions for lightweight syntax/import checks where they can run safely without private datasets.
+- The included GitHub Actions workflow performs Python syntax checks without requiring datasets; it does not guarantee that all programs execute successfully.
 - Add a release or tag when you want to mark a stable version of the lab record.
 
 ## Academic use
 
-This repository is a learning and reference portfolio. Verify the official course syllabus, experiment titles, datasets, and submission requirements with your department. Cite original dataset sources and any external references you use.
+This repository is a learning and reference portfolio. Verify the official course syllabus, experiment titles, datasets, and submission requirements with your department. Cite original dataset sources and any external references you use. Citation metadata is available in [CITATION.cff](CITATION.cff).
 
 ## Maintainer
 
