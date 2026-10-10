@@ -1,133 +1,45 @@
-# EXERCISE – 15 (DBSCAN CLUSTERING)
+# Exercise 15 — DBSCAN Clustering
 
-## Code
+**Course:** Machine Learning Lab  
+**Programme:** I M.Sc. Data Science · I Semester  
+**Department Number:** 26-PDS-002  
+**Student:** Joe Rakesh A · Loyola College, Chennai  
+**Academic Year:** 2026–2027
 
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
+## 1. Aim
+Perform DBSCAN clustering on the heart disease dataset, identify clusters and noise points, and visualise the result using PCA.
 
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.cluster import DBSCAN
-from sklearn.decomposition import PCA
+## 2. Dataset
+- **Expected path:** `heart_disease_dataset.csv`
+- Obtain the dataset from an authorised source. Do not commit data that cannot legally be redistributed.
+- See the [dataset guide](../datasets/README.md).
 
-df = pd.read_csv("heart_disease_dataset.csv")
+## 3. Algorithm / Workflow
+1. Load data and separate the target.
+2. Identify numeric and categorical features.
+3. Scale numeric features and one-hot encode categorical features.
+4. Apply DBSCAN(eps=1.5, min_samples=5).
+5. Assign cluster labels and count clusters/noise.
+6. Apply PCA to two dimensions and plot the clustering result.
 
-print("Dataset Shape:", df.shape)
-print("\nFirst 5 records:")
-print(df.head())
+## 4. Implementation
+- [Original Python program](./ex-15.py)
+- [Jupyter notebook](./ex-15.ipynb)
 
-X = df.drop("Heart Disease", axis=1)
+The Python program is preserved as-is. The notebook splits its existing code into executable cells; it does not replace the original implementation.
 
-numeric_features = X.select_dtypes(
-    include=["int64", "float64"]
-).columns
+## 5. Results
+**Result summary transcribed from the supplied practical record:**
 
-categorical_features = X.select_dtypes(
-    include=["object"]
-).columns
+With eps=1.5 and min_samples=5, the practical record reports all 1000 records as noise and no clusters in the 27-dimensional feature space.
 
-preprocessor = ColumnTransformer(
-    transformers=[
-        ("num", StandardScaler(), numeric_features),
-        ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_features)
-    ]
-)
+This is a recorded result, not a fresh run performed during this update. Run the notebook with the correct dataset and dependencies to generate current outputs and plots.
 
-X_processed = preprocessor.fit_transform(X)
+## 6. Interpretation and validation
+Interpret outputs from your run and document limitations. Check preprocessing, feature scaling, distance/linkage parameters and cluster interpretation as relevant to the method.
 
-X_processed = X_processed
+## 7. Conclusion
+Summarise findings from your execution; do not report metrics that were not computed.
 
-dbscan = DBSCAN(
-    eps=1.5,
-    min_samples=5
-)
-
-labels = dbscan.fit_predict(X_processed)
-
-df["Cluster"] = labels
-
-print("\nCluster Labels:")
-print(df["Cluster"].value_counts().sort_index())
-
-noise_points = df[df["Cluster"] == -1]
-
-print("\nNumber of Noise Points:")
-print(len(noise_points))
-
-print("\nNoise Points:")
-print(noise_points.head(10))
-
-number_of_clusters = len(
-    set(labels)
-) - (1 if -1 in labels else 0)
-
-print("\nNumber of Clusters:")
-print(number_of_clusters)
-
-pca = PCA(n_components=2)
-
-X_pca = pca.fit_transform(X_processed)
-
-plt.figure(figsize=(9, 6))
-
-plt.scatter(
-    X_pca[:, 0],
-    X_pca[:, 1],
-    c=labels,
-    cmap="viridis",
-    s=40
-)
-
-plt.xlabel("Principal Component 1")
-plt.ylabel("Principal Component 2")
-plt.title("DBSCAN Clustering")
-
-plt.colorbar(label="Cluster")
-
-plt.show()
-```
-
-## Output
-
-```text
-The program was executed on the Heart disease dataset (heart_disease_dataset.csv) and produced the following output:
-
-Dataset Shape: (1000, 16)
-
-First 5 records:
-   Age  Gender  ...   Chest Pain Type  Heart Disease
-0   75  Female  ...   Atypical Angina              1
-1   48    Male  ...    Typical Angina              0
-2   53    Male  ...   Atypical Angina              1
-3   69  Female  ...  Non-anginal Pain              0
-4   62  Female  ...      Asymptomatic              0
-
-[5 rows x 16 columns]
-
-Cluster Labels:
-Cluster
--1    1000
-Name: count, dtype: int64
-
-Number of Noise Points:
-1000
-
-Noise Points:
-   Age  Gender  Cholesterol  ...   Chest Pain Type  Heart Disease Cluster
-0   75  Female          228  ...   Atypical Angina              1      -1
-1   48    Male          204  ...    Typical Angina              0      -1
-2   53    Male          234  ...   Atypical Angina              1      -1
-3   69  Female          192  ...  Non-anginal Pain              0      -1
-4   62  Female          172  ...      Asymptomatic              0      -1
-5   77    Male          309  ...      Asymptomatic              1      -1
-6   64  Female          211  ...    Typical Angina              1      -1
-7   60  Female          208  ...      Asymptomatic              1      -1
-8   37  Female          317  ...  Non-anginal Pain              0      -1
-9   63    Male          204  ...      Asymptomatic              1      -1
-
-[10 rows x 17 columns]
-
-Number of Clusters:
-0
-```
+## 8. Reproducibility
+Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
