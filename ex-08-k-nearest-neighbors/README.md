@@ -40,7 +40,9 @@ This is a recorded result, not a fresh run performed during this update. Run the
 Interpret outputs from your run and document limitations. Check for leakage, duplicates and evaluation design before interpreting unexpectedly high classification scores as generalisable.
 
 ## 7. Conclusion
-Summarise findings from your execution; do not report metrics that were not computed.
+
+K-Nearest Neighbors classifies a record using nearby training examples. The recorded experiment selected K=11, but the best K depends on the split, feature scaling and distance metric. Compare the reported classification metrics and verify the choice using cross-validation rather than relying on one split alone.
 
 ## 8. Reproducibility
-Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
+
+The GitHub Actions workflow uses Python 3.12. The notebook reads `datasets/heart_disease_dataset.csv` from this repository's `main` branch. Dependencies are listed in `requirements.txt` without pinned versions. Record the repository commit or dataset checksum, `python --version`, and `python -m pip freeze`. Preserve the random seed and split settings.
