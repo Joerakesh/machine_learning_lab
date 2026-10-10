@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as described below."
+type: software
+title: "Machine Learning Laboratory — M.Sc. Data Science"
+authors:
+  - family-names: Rakesh
+    given-names: Joe
+repository-code: "https://github.com/Joerakesh/machine_learning_lab"
