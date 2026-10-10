@@ -38,22 +38,22 @@ The notebooks are designed to display code, tables, charts and output when run i
 
 | Ex. No. | Experiment | Main concepts | Python | Notebook |
 |---:|---|---|---|---|
-| 01 | Exploratory Data Analysis | Missing values, descriptive statistics, visualisation, correlation | [Program](ex-01/ex-01.py) · [README](ex-01/README.md) | [Notebook](ex-01/ex-01.ipynb) |
-| 02 | Simple Linear Regression | Regression line, slope, intercept, MSE, R² | [Program](ex-02/ex-02.py) · [README](ex-02/README.md) | [Notebook](ex-02/ex-02.ipynb) |
-| 03 | Multiple Linear Regression | Multiple predictors, encoding, regression metrics | [Program](ex-03/ex-03.py) · [README](ex-03/README.md) | [Notebook](ex-03/ex-03.ipynb) |
-| 04 | Polynomial Regression | Polynomial features, degree-2 curve, regression metrics | [Program](ex-04/ex-04.py) · [README](ex-04/README.md) | [Notebook](ex-04/ex-04.ipynb) |
-| 05 | Ridge Regression | L2 regularisation, polynomial features, overfitting | [Program](ex-05/ex-05.py) · [README](ex-05/README.md) | [Notebook](ex-05/ex-05.ipynb) |
-| 06 | Lasso Regression | L1 regularisation, feature shrinkage, overfitting | [Program](ex-06/ex-06.py) · [README](ex-06/README.md) | [Notebook](ex-06/ex-06.ipynb) |
-| 07 | Logistic Regression | Binary classification, confusion matrix, ROC-AUC | [Program](ex-07/ex-07.py) · [README](ex-07/README.md) | [Notebook](ex-07/ex-07.ipynb) |
-| 08 | K-Nearest Neighbors | Distance-based classification, choosing K | [Program](ex-08/ex-08.py) · [README](ex-08/README.md) | [Notebook](ex-08/ex-08.ipynb) |
-| 09 | Decision Tree | Tree classifier, classification metrics, visualisation | [Program](ex-09/ex-09.py) · [README](ex-09/README.md) | [Notebook](ex-09/ex-09.ipynb) |
-| 10 | Random Forest | Ensemble classification, ROC-AUC | [Program](ex-10/ex-10.py) · [README](ex-10/README.md) | [Notebook](ex-10/ex-10.ipynb) |
-| 11 | Support Vector Machine | Linear, polynomial, RBF and sigmoid kernels | [Program](ex-11/ex-11.py) · [README](ex-11/README.md) | [Notebook](ex-11/ex-11.ipynb) |
-| 12 | Hyperparameter Tuning | GridSearchCV, cross-validation, SVC | [Program](ex-12/ex-12.py) · [README](ex-12/README.md) | [Notebook](ex-12/ex-12.ipynb) |
-| 13 | K-Means Clustering | Inertia, Elbow Method, cluster labels | [Program](ex-13/ex-13.py) · [README](ex-13/README.md) | [Notebook](ex-13/ex-13.ipynb) |
-| 14 | Hierarchical Clustering | Ward linkage, agglomerative clustering, dendrogram | [Program](ex-14/ex-14.py) · [README](ex-14/README.md) | [Notebook](ex-14/ex-14.ipynb) |
-| 15 | DBSCAN Clustering | Density-based clusters, noise points, PCA visualisation | [Program](ex-15/ex-15.py) · [README](ex-15/README.md) | [Notebook](ex-15/ex-15.ipynb) |
-| 16 | Principal Component Analysis | Dimensionality reduction, principal components, explained variance | [Program](ex-16/ex-16.py) · [README](ex-16/README.md) | [Notebook](ex-16/ex-16.ipynb) |
+| 01 | Exploratory Data Analysis | Missing values, descriptive statistics, visualisation, correlation | [Program](ex-01-exploratory-data-analysis/ex-01.py) · [README](ex-01-exploratory-data-analysis/README.md) | [Notebook](ex-01-exploratory-data-analysis/ex-01.ipynb) |
+| 02 | Simple Linear Regression | Regression line, slope, intercept, MSE, R² | [Program](ex-02-simple-linear-regression/ex-02.py) · [README](ex-02-simple-linear-regression/README.md) | [Notebook](ex-02-simple-linear-regression/ex-02.ipynb) |
+| 03 | Multiple Linear Regression | Multiple predictors, encoding, regression metrics | [Program](ex-03-multiple-linear-regression/ex-03.py) · [README](ex-03-multiple-linear-regression/README.md) | [Notebook](ex-03-multiple-linear-regression/ex-03.ipynb) |
+| 04 | Polynomial Regression | Polynomial features, degree-2 curve, regression metrics | [Program](ex-04-polynomial-regression/ex-04.py) · [README](ex-04-polynomial-regression/README.md) | [Notebook](ex-04-polynomial-regression/ex-04.ipynb) |
+| 05 | Ridge Regression | L2 regularisation, polynomial features, overfitting | [Program](ex-05-ridge-regression/ex-05.py) · [README](ex-05-ridge-regression/README.md) | [Notebook](ex-05-ridge-regression/ex-05.ipynb) |
+| 06 | Lasso Regression | L1 regularisation, feature shrinkage, overfitting | [Program](ex-06-lasso-regression/ex-06.py) · [README](ex-06-lasso-regression/README.md) | [Notebook](ex-06-lasso-regression/ex-06.ipynb) |
+| 07 | Logistic Regression | Binary classification, confusion matrix, ROC-AUC | [Program](ex-07-logistic-regression/ex-07.py) · [README](ex-07-logistic-regression/README.md) | [Notebook](ex-07-logistic-regression/ex-07.ipynb) |
+| 08 | K-Nearest Neighbors | Distance-based classification, choosing K | [Program](ex-08-k-nearest-neighbors/ex-08.py) · [README](ex-08-k-nearest-neighbors/README.md) | [Notebook](ex-08-k-nearest-neighbors/ex-08.ipynb) |
+| 09 | Decision Tree | Tree classifier, classification metrics, visualisation | [Program](ex-09-decision-tree/ex-09.py) · [README](ex-09-decision-tree/README.md) | [Notebook](ex-09-decision-tree/ex-09.ipynb) |
+| 10 | Random Forest | Ensemble classification, ROC-AUC | [Program](ex-10-random-forest/ex-10.py) · [README](ex-10-random-forest/README.md) | [Notebook](ex-10-random-forest/ex-10.ipynb) |
+| 11 | Support Vector Machine | Linear, polynomial, RBF and sigmoid kernels | [Program](ex-11-support-vector-machine/ex-11.py) · [README](ex-11-support-vector-machine/README.md) | [Notebook](ex-11-support-vector-machine/ex-11.ipynb) |
+| 12 | Hyperparameter Tuning | GridSearchCV, cross-validation, SVC | [Program](ex-12-hyperparameter-tuning/ex-12.py) · [README](ex-12-hyperparameter-tuning/README.md) | [Notebook](ex-12-hyperparameter-tuning/ex-12.ipynb) |
+| 13 | K-Means Clustering | Inertia, Elbow Method, cluster labels | [Program](ex-13-k-means-clustering/ex-13.py) · [README](ex-13-k-means-clustering/README.md) | [Notebook](ex-13-k-means-clustering/ex-13.ipynb) |
+| 14 | Hierarchical Clustering | Ward linkage, agglomerative clustering, dendrogram | [Program](ex-14-hierarchical-clustering/ex-14.py) · [README](ex-14-hierarchical-clustering/README.md) | [Notebook](ex-14-hierarchical-clustering/ex-14.ipynb) |
+| 15 | DBSCAN Clustering | Density-based clusters, noise points, PCA visualisation | [Program](ex-15-dbscan-clustering/ex-15.py) · [README](ex-15-dbscan-clustering/README.md) | [Notebook](ex-15-dbscan-clustering/ex-15.ipynb) |
+| 16 | Principal Component Analysis | Dimensionality reduction, principal components, explained variance | [Program](ex-16-principal-component-analysis/ex-16.py) · [README](ex-16-principal-component-analysis/README.md) | [Notebook](ex-16-principal-component-analysis/ex-16.ipynb) |
 
 ## Learning Outcomes
 
@@ -74,7 +74,7 @@ Through these practical exercises, the lab record covers:
 - **Hierarchical clustering visualisation:** SciPy where used
 - **Interactive format:** Jupyter Notebook
 
-Package requirements can vary by exercise. See the exercise README and [dataset guide](datasets/README.md) before running a program.
+Package requirements can vary by exercise. See the README inside each exercise folder for its expected dataset path.
 
 ## Getting Started
 
@@ -108,7 +108,7 @@ python -m pip install -r requirements.txt
 
 ### 4. Add datasets
 
-Place each dataset at the relative path expected by its program. Current expected names include `Dataset/titanic.csv`, `Dataset/Salary.csv`, `Dataset/Housing.csv`, `Dataset/fish.csv`, and `heart_disease_dataset.csv`. Verify the exact path in the relevant exercise README. Dataset files may not be included because they can have separate licensing or distribution terms. See [datasets/README.md](datasets/README.md).
+Place each dataset at the relative path expected by its program. Current expected names include `Dataset/titanic.csv`, `Dataset/Salary.csv`, `Dataset/Housing.csv`, `Dataset/fish.csv`, and `heart_disease_dataset.csv`. Verify the exact path in the relevant exercise README. Dataset files may not be included because they can have separate licensing or distribution terms. Upload datasets at the exact relative paths referenced in each exercise program.
 
 ### 5. Run a Python program or notebook
 
@@ -135,7 +135,7 @@ Each exercise README includes its aim, algorithm/workflow, dataset path, links t
 - **Dataset guide:** expected file names and data-source reminders.
 - **Dependencies:** [requirements.txt](requirements.txt) lists the shared lab libraries.
 - **Output figures:** [assets/outputs/README.md](assets/outputs/README.md) explains where to keep generated charts.
-- **GitHub Actions:** lightweight Python syntax checks.
+- **GitHub Actions:** Python syntax checks and automated notebook execution when datasets are uploaded.
 - **Issue templates:** structured bug reports and documentation questions.
 - **Citation metadata:** [CITATION.cff](CITATION.cff).
 - **License:** [LICENSE](LICENSE); review whether these terms fit the rights and intended reuse of all materials.
