@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "datasets/**"
+      - "ex-*/*.ipynb"
       - "Dataset/**"
       - "*.csv"
       - ".github/workflows/execute-notebooks.yml"
