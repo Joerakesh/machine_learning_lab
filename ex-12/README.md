@@ -1,168 +1,46 @@
-# EXERCISE – 12 (HYPERPARAMETER TUNING)
+# Exercise 12 — Hyperparameter Tuning
 
-## Code
+**Course:** Machine Learning Lab  
+**Programme:** I M.Sc. Data Science · I Semester  
+**Department Number:** 26-PDS-002  
+**Student:** Joe Rakesh A · Loyola College, Chennai  
+**Academic Year:** 2026–2027
 
-```python
-import pandas as pd
+## 1. Aim
+Tune an SVM classifier for heart disease prediction using GridSearchCV with cross-validation.
 
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.pipeline import Pipeline
-from sklearn.svm import SVC
+## 2. Dataset
+- **Expected path:** `heart_disease_dataset.csv`
+- Obtain the dataset from an authorised source. Do not commit data that cannot legally be redistributed.
+- See the [dataset guide](../datasets/README.md).
 
-from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    classification_report,
-    confusion_matrix
-)
+## 3. Algorithm / Workflow
+1. Load data and separate the Heart Disease target.
+2. Build a pipeline for numeric scaling, categorical one-hot encoding and SVC.
+3. Split 80:20 with stratification.
+4. Define grids for C, kernel and gamma.
+5. Run GridSearchCV with 5-fold cross-validation and accuracy scoring.
+6. Display best parameters and cross-validation score.
+7. Evaluate the selected model on the test set.
 
-df = pd.read_csv("heart_disease_dataset.csv")
+## 4. Implementation
+- [Original Python program](./ex-12.py)
+- [Jupyter notebook](./ex-12.ipynb)
 
-print("Dataset Shape:", df.shape)
-print(df.head())
+The Python program is preserved as-is. The notebook splits its existing code into executable cells; it does not replace the original implementation.
 
-X = df.drop("Heart Disease", axis=1)
-y = df["Heart Disease"]
+## 5. Results
+**Result summary transcribed from the supplied practical record:**
 
-numeric_features = X.select_dtypes(
-    include=["int64", "float64"]
-).columns
+GridSearchCV selected C=100, kernel=rbf and gamma=auto with cross-validation accuracy 0.9225. Test accuracy was 0.915, precision 0.9067, recall 0.8718 and F1 0.8889.
 
-categorical_features = X.select_dtypes(
-    include=["object"]
-).columns
+This is a recorded result, not a fresh run performed during this update. Run the notebook with the correct dataset and dependencies to generate current outputs and plots.
 
-preprocessor = ColumnTransformer(
-    transformers=[
-        ("num", StandardScaler(), numeric_features),
-        ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_features)
-    ]
-)
+## 6. Interpretation and validation
+Interpret outputs from your run and document limitations. Check for leakage, duplicates and evaluation design before interpreting unexpectedly high classification scores as generalisable.
 
-pipeline = Pipeline(
-    steps=[
-        ("preprocessor", preprocessor),
-        ("svm", SVC())
-    ]
-)
+## 7. Conclusion
+Summarise findings from your execution; do not report metrics that were not computed.
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X,
-    y,
-    test_size=0.20,
-    random_state=42,
-    stratify=y
-)
-
-param_grid = {
-    "svm__C": [0.1, 1, 10, 100],
-
-    "svm__kernel": [
-        "linear",
-        "rbf",
-        "poly"
-    ],
-
-    "svm__gamma": [
-        "scale",
-        "auto"
-    ]
-}
-
-grid_search = GridSearchCV(
-    estimator=pipeline,
-    param_grid=param_grid,
-    cv=5,
-    scoring="accuracy",
-    n_jobs=-1
-)
-
-print("\nTraining GridSearchCV...")
-
-grid_search.fit(X_train, y_train)
-
-print("\n====================================")
-print("BEST PARAMETERS")
-print("====================================")
-
-print(grid_search.best_params_)
-
-print("\nBest Cross Validation Score:")
-print(grid_search.best_score_)
-
-best_model = grid_search.best_estimator_
-
-y_pred = best_model.predict(X_test)
-
-print("Accuracy :",
-      accuracy_score(y_test, y_pred))
-
-print("Precision:",
-      precision_score(y_test, y_pred, zero_division=0))
-
-print("Recall   :",
-      recall_score(y_test, y_pred, zero_division=0))
-
-print("F1 Score :",
-      f1_score(y_test, y_pred, zero_division=0))
-
-print("\nClassification Report:")
-print(classification_report(
-    y_test,
-    y_pred,
-    zero_division=0
-))
-
-print("\nResult:")
-print("SVM hyperparameters were successfully tuned")
-print("using GridSearchCV.")
-```
-
-## Output
-
-```text
-The program was executed on the Heart disease dataset (heart_disease_dataset.csv) and produced the following output:
-
-Dataset Shape: (1000, 16)
-   Age  Gender  ...   Chest Pain Type  Heart Disease
-0   75  Female  ...   Atypical Angina              1
-1   48    Male  ...    Typical Angina              0
-2   53    Male  ...   Atypical Angina              1
-3   69  Female  ...  Non-anginal Pain              0
-4   62  Female  ...      Asymptomatic              0
-
-[5 rows x 16 columns]
-
-Training GridSearchCV...
-
-====================================
-BEST PARAMETERS
-====================================
-{'svm__C': 100, 'svm__gamma': 'auto', 'svm__kernel': 'rbf'}
-
-Best Cross Validation Score:
-0.9225
-Accuracy : 0.915
-Precision: 0.9066666666666666
-Recall   : 0.8717948717948718
-F1 Score : 0.8888888888888888
-
-Classification Report:
-              precision    recall  f1-score   support
-
-           0       0.92      0.94      0.93       122
-           1       0.91      0.87      0.89        78
-
-    accuracy                           0.92       200
-   macro avg       0.91      0.91      0.91       200
-weighted avg       0.91      0.92      0.91       200
-
-
-Result:
-SVM hyperparameters were successfully tuned
-using GridSearchCV.
-```
+## 8. Reproducibility
+Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
