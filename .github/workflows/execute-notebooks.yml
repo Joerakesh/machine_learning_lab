@@ -3,8 +3,8 @@ name: Execute ML lab notebooks
 on:
   push:
     paths:
-      - "Dataset/**"
       - "datasets/**"
+      - "Dataset/**"
       - "*.csv"
       - ".github/workflows/execute-notebooks.yml"
   workflow_dispatch:
@@ -31,37 +31,29 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install nbconvert ipykernel
 
-      - name: Execute notebooks when their datasets exist
-        id: execute
+      - name: Prepare datasets in paths expected by original programs
+        run: |
+          set -euo pipefail
+          mkdir -p Dataset
+          cp datasets/titanic.csv Dataset/titanic.csv
+          cp datasets/Salary.csv Dataset/Salary.csv
+          cp datasets/Housing.csv Dataset/Housing.csv
+          cp datasets/Housing.csv Housing.csv
+          cp datasets/fish.csv Dataset/fish.csv
+          cp datasets/heart_disease_dataset.csv heart_disease_dataset.csv
+
+      - name: Execute notebooks and save outputs
         shell: bash
         run: |
           set -uo pipefail
           mkdir -p executed-notebooks
           failures=0
           executed=0
-          skipped=0
 
           while IFS= read -r notebook; do
             folder="$(basename "$(dirname "$notebook")")"
-            case "$folder" in
-              ex-01-exploratory-data-analysis) dataset="Dataset/titanic.csv" ;;
-              ex-02-simple-linear-regression) dataset="Dataset/Salary.csv" ;;
-              ex-03-multiple-linear-regression) dataset="Dataset/Housing.csv" ;;
-              ex-04-polynomial-regression) dataset="Dataset/fish.csv" ;;
-              ex-05-ridge-regression|ex-06-lasso-regression) dataset="Housing.csv" ;;
-              ex-*) dataset="heart_disease_dataset.csv" ;;
-              *) continue ;;
-            esac
-
-            if [[ ! -f "$dataset" ]]; then
-              echo "SKIPPED: $notebook — missing dataset: $dataset"
-              echo "- Skipped `$folder`: missing `$dataset`" >> "$GITHUB_STEP_SUMMARY"
-              skipped=$((skipped + 1))
-              continue
-            fi
-
             output="${folder}.ipynb"
-            echo "Executing $notebook (dataset: $dataset)"
+            echo "Executing $notebook"
             if jupyter nbconvert --to notebook --execute "$notebook" \
               --output "$output" --output-dir executed-notebooks \
               --ExecutePreprocessor.timeout=600; then
@@ -80,14 +72,9 @@ jobs:
             echo ""
             echo "### Notebook execution summary"
             echo "- Executed successfully: $executed"
-            echo "- Skipped (dataset missing): $skipped"
             echo "- Failed: $failures"
-            echo "- Executed notebooks are uploaded as a workflow artifact when available."
           } >> "$GITHUB_STEP_SUMMARY"
 
-          if (( executed == 0 )); then
-            echo "No notebooks were executed. Upload the required datasets with the expected filenames and paths."
-          fi
           if (( failures > 0 )); then
             exit 1
           fi
