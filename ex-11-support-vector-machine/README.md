@@ -40,7 +40,9 @@ This is a recorded result, not a fresh run performed during this update. Run the
 Interpret outputs from your run and document limitations. Check for leakage, duplicates and evaluation design before interpreting unexpectedly high classification scores as generalisable.
 
 ## 7. Conclusion
-Summarise findings from your execution; do not report metrics that were not computed.
+
+The experiment compares SVM kernels and the practical-record results favour the polynomial kernel on the reported test split. Kernel performance can change with scaling, hyperparameters and data splits, so compare results using the same validation procedure and keep the final test set separate from model selection.
 
 ## 8. Reproducibility
-Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
+
+The GitHub Actions workflow uses Python 3.12. The notebook reads `datasets/heart_disease_dataset.csv` from this repository's `main` branch. Dependencies are listed in `requirements.txt` without pinned versions. Record the repository commit or dataset checksum, `python --version`, and `python -m pip freeze`; preserve split, scaling and kernel settings.
