@@ -6,17 +6,16 @@ on:
       - "Dataset/**"
       - "datasets/**"
       - "*.csv"
-      - ".github/workflows/python-checks.yml"
       - ".github/workflows/execute-notebooks.yml"
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   execute:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -32,19 +31,30 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install nbconvert ipykernel
 
-      - name: Prepare notebook execution output
-        run: mkdir -p executed-notebooks
-
-      - name: Execute notebooks
+      - name: Execute notebooks and save outputs
         run: |
           set -e
+          mkdir -p executed-notebooks
           for notebook in ex-*/*.ipynb; do
             echo "Executing $notebook"
             output="$(basename "$(dirname "$notebook")").ipynb"
             jupyter nbconvert --to notebook --execute "$notebook" --output "$output" --output-dir executed-notebooks --ExecutePreprocessor.timeout=600
+            cp "executed-notebooks/$output" "$notebook"
           done
 
-      - name: Upload executed notebooks with outputs
+      - name: Commit notebooks with rendered outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ex-*/*.ipynb
+          if git diff --cached --quiet; then
+            echo "No notebook output changes to commit."
+          else
+            git commit -m "Add executed notebook outputs"
+            git push
+          fi
+
+      - name: Upload executed notebooks as backup artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
