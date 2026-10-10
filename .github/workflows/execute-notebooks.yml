@@ -10,6 +10,10 @@ on:
       - ".github/workflows/execute-notebooks.yml"
   workflow_dispatch:
 
+concurrency:
+  group: execute-ml-lab-notebooks
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -58,10 +62,9 @@ jobs:
             folder="$(basename "$(dirname "$notebook")")"
             output="${folder}.ipynb"
             echo "Executing $notebook with cwd=$GITHUB_WORKSPACE"
-            if jupyter nbconvert --to notebook --execute "$notebook" \
-              --output "$output" --output-dir executed-notebooks \
-              --ExecutePreprocessor.cwd="$GITHUB_WORKSPACE" \
-              --ExecutePreprocessor.timeout=600; then
+            if (cd "$GITHUB_WORKSPACE" && jupyter nbconvert --to notebook --execute "$GITHUB_WORKSPACE/$notebook" \
+              --output "$output" --output-dir "$GITHUB_WORKSPACE/executed-notebooks" \
+              --ExecutePreprocessor.timeout=600); then
               cp "executed-notebooks/$output" "$notebook"
               echo "SUCCESS: $notebook"
               printf -- '- Passed: `%s`\n' "$folder" >> "$GITHUB_STEP_SUMMARY"
