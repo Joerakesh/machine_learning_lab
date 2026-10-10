@@ -1,246 +1,46 @@
-# EXERCISE – 09 (DECISION TREE)
+# Exercise 09 — Decision Tree
 
-## Code
+**Course:** Machine Learning Lab  
+**Programme:** I M.Sc. Data Science · I Semester  
+**Department Number:** 26-PDS-002  
+**Student:** Joe Rakesh A · Loyola College, Chennai  
+**Academic Year:** 2026–2027
 
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
+## 1. Aim
+Build a Decision Tree classifier for heart disease prediction and evaluate and visualise the trained model.
 
-from sklearn.model_selection import train_test_split
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.pipeline import Pipeline
+## 2. Dataset
+- **Expected path:** `heart_disease_dataset.csv`
+- Obtain the dataset from an authorised source. Do not commit data that cannot legally be redistributed.
+- See the [dataset guide](../datasets/README.md).
 
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.tree import plot_tree
+## 3. Algorithm / Workflow
+1. Load data and separate the Heart Disease target.
+2. Identify numeric and categorical columns.
+3. Preprocess numeric features with scaling and categorical features with one-hot encoding.
+4. Split 80:20 with stratification.
+5. Train DecisionTreeClassifier(max_depth=4).
+6. Calculate accuracy, precision, recall, F1, classification report and confusion matrix.
+7. Visualise the confusion matrix and trained tree.
 
-from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    confusion_matrix,
-    classification_report,
-    ConfusionMatrixDisplay
-)
+## 4. Implementation
+- [Original Python program](./ex-09.py)
+- [Jupyter notebook](./ex-09.ipynb)
 
-df = pd.read_csv("heart_disease_dataset.csv")
+The Python program is preserved as-is. The notebook splits its existing code into executable cells; it does not replace the original implementation.
 
-print("First 5 rows:")
-print(df.head())
+## 5. Results
+**Result summary transcribed from the supplied practical record:**
 
-print("\nDataset Shape:")
-print(df.shape)
+The practical record reports accuracy, precision, recall and F1 of 1.0 on 200 test records, with 122 true negatives and 78 true positives. Perfect scores warrant checks for leakage and split integrity.
 
-X = df.drop("Heart Disease", axis=1)
-y = df["Heart Disease"]
+This is a recorded result, not a fresh run performed during this update. Run the notebook with the correct dataset and dependencies to generate current outputs and plots.
 
-print("\nFeatures:")
-print(X.columns)
+## 6. Interpretation and validation
+Interpret outputs from your run and document limitations. Check for leakage, duplicates and evaluation design before interpreting unexpectedly high classification scores as generalisable.
 
-print("\nTarget:")
-print(y.name)
+## 7. Conclusion
+Summarise findings from your execution; do not report metrics that were not computed.
 
-categorical_columns = X.select_dtypes(
-    include=["object"]
-).columns
-
-numerical_columns = X.select_dtypes(
-    exclude=["object"]
-).columns
-
-print("\nCategorical Columns:")
-print(list(categorical_columns))
-
-print("\nNumerical Columns:")
-print(list(numerical_columns))
-
-preprocessor = ColumnTransformer(
-    transformers=[
-        (
-            "cat",
-            OneHotEncoder(handle_unknown="ignore"),
-            categorical_columns
-        )
-    ],
-    remainder="passthrough"
-)
-
-decision_tree = DecisionTreeClassifier(
-    criterion="gini",
-    max_depth=4,
-    random_state=42
-)
-
-model = Pipeline(
-    steps=[
-        ("preprocessor", preprocessor),
-        ("classifier", decision_tree)
-    ]
-)
-
-model = Pipeline(
-    steps=[
-        ("preprocessor", preprocessor),
-        ("classifier", decision_tree)
-    ]
-)
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X,
-    y,
-    test_size=0.20,
-    random_state=42,
-    stratify=y
-)
-
-print("\nTraining Data:", X_train.shape)
-print("Testing Data:", X_test.shape)
-
-model.fit(X_train, y_train)
-
-print("\nDecision Tree Model Trained Successfully!")
-
-y_pred = model.predict(X_test)
-
-accuracy = accuracy_score(y_test, y_pred)
-
-precision = precision_score(
-    y_test,
-    y_pred,
-    zero_division=0
-)
-
-recall = recall_score(
-    y_test,
-    y_pred,
-    zero_division=0
-)
-
-f1 = f1_score(
-    y_test,
-    y_pred,
-    zero_division=0
-)
-
-print("\n==========================================")
-print("       DECISION TREE EVALUATION")
-print("==========================================")
-
-print("Accuracy  :", round(accuracy, 4))
-print("Precision :", round(precision, 4))
-print("Recall    :", round(recall, 4))
-print("F1 Score  :", round(f1, 4))
-
-# ==========================================
-# 12. Classification Report
-# ==========================================
-
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
-
-# ==========================================
-# 13. Confusion Matrix
-# ==========================================
-
-cm = confusion_matrix(y_test, y_pred)
-
-print("\nConfusion Matrix:")
-print(cm)
-
-disp = ConfusionMatrixDisplay(
-    confusion_matrix=cm,
-    display_labels=["No Heart Disease", "Heart Disease"]
-)
-
-disp.plot()
-
-plt.title("Confusion Matrix - Decision Tree")
-plt.show()
-
-# Get the trained classifier
-tree_model = model.named_steps["classifier"]
-
-# Get feature names after One-Hot Encoding
-feature_names = model.named_steps[
-    "preprocessor"
-].get_feature_names_out()
-
-plt.figure(figsize=(25, 12))
-
-plot_tree(
-    tree_model,
-    feature_names=feature_names,
-    class_names=["No Heart Disease", "Heart Disease"],
-    filled=True,
-    rounded=True,
-    fontsize=8
-)
-
-plt.title("Decision Tree for Heart Disease Classification")
-
-plt.show()
-```
-
-## Output
-
-```text
-The program was executed on the Heart disease dataset (heart_disease_dataset.csv) and produced the following output:
-
-First 5 rows:
-   Age  Gender  ...   Chest Pain Type  Heart Disease
-0   75  Female  ...   Atypical Angina              1
-1   48    Male  ...    Typical Angina              0
-2   53    Male  ...   Atypical Angina              1
-3   69  Female  ...  Non-anginal Pain              0
-4   62  Female  ...      Asymptomatic              0
-
-[5 rows x 16 columns]
-
-Dataset Shape:
-(1000, 16)
-
-Features:
-Index(['Age', 'Gender', 'Cholesterol', 'Blood Pressure', 'Heart Rate',
-       'Smoking', 'Alcohol Intake', 'Exercise Hours', 'Family History',
-       'Diabetes', 'Obesity', 'Stress Level', 'Blood Sugar',
-       'Exercise Induced Angina', 'Chest Pain Type'],
-      dtype='object')
-
-Target:
-Heart Disease
-
-Categorical Columns:
-['Gender', 'Smoking', 'Alcohol Intake', 'Family History', 'Diabetes', 'Obesity', 'Exercise Induced Angina', 'Chest Pain Type']
-
-Numerical Columns:
-['Age', 'Cholesterol', 'Blood Pressure', 'Heart Rate', 'Exercise Hours', 'Stress Level', 'Blood Sugar']
-
-Training Data: (800, 15)
-Testing Data: (200, 15)
-
-Decision Tree Model Trained Successfully!
-
-==========================================
-       DECISION TREE EVALUATION
-==========================================
-Accuracy  : 1.0
-Precision : 1.0
-Recall    : 1.0
-F1 Score  : 1.0
-
-Classification Report:
-              precision    recall  f1-score   support
-
-           0       1.00      1.00      1.00       122
-           1       1.00      1.00      1.00        78
-
-    accuracy                           1.00       200
-   macro avg       1.00      1.00      1.00       200
-weighted avg       1.00      1.00      1.00       200
-
-
-Confusion Matrix:
-[[122   0]
- [  0  78]]
-```
+## 8. Reproducibility
+Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
