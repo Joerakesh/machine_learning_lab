@@ -40,7 +40,9 @@ This is a recorded result, not a fresh run performed during this update. Run the
 Interpret outputs from your run and document limitations. Check for leakage, duplicates and evaluation design before interpreting unexpectedly high classification scores as generalisable.
 
 ## 7. Conclusion
-Summarise findings from your execution; do not report metrics that were not computed.
+
+Lasso Regression applies L1 regularisation and can shrink some coefficients to zero. The recorded results show a smaller train/test gap than ordinary linear regression, but the negative test R² suggests that the model still did not explain the test-set target well. Check scaling, alpha selection and the evaluation split.
 
 ## 8. Reproducibility
-Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
+
+The GitHub Actions workflow uses Python 3.12. The notebook reads `datasets/Housing.csv` from this repository's `main` branch. Dependencies are listed in `requirements.txt` without pinned versions. Record the repository commit or dataset checksum, `python --version`, and `python -m pip freeze`.
