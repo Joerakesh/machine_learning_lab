@@ -41,6 +41,8 @@ jobs:
           cp datasets/Housing.csv Housing.csv
           cp datasets/fish.csv Dataset/fish.csv
           cp datasets/heart_disease_dataset.csv heart_disease_dataset.csv
+          echo "Dataset files prepared:"
+          ls -l Dataset Housing.csv heart_disease_dataset.csv
 
       - name: Execute notebooks and save outputs
         shell: bash
@@ -53,17 +55,18 @@ jobs:
           while IFS= read -r notebook; do
             folder="$(basename "$(dirname "$notebook")")"
             output="${folder}.ipynb"
-            echo "Executing $notebook"
+            echo "Executing $notebook from repository root"
             if jupyter nbconvert --to notebook --execute "$notebook" \
               --output "$output" --output-dir executed-notebooks \
+              --ExecutePreprocessor.cwd=. \
               --ExecutePreprocessor.timeout=600; then
               cp "executed-notebooks/$output" "$notebook"
               echo "SUCCESS: $notebook"
-              echo "- Passed: `$folder`" >> "$GITHUB_STEP_SUMMARY"
+              printf -- '- Passed: `%s`\n' "$folder" >> "$GITHUB_STEP_SUMMARY"
               executed=$((executed + 1))
             else
               echo "FAILED: $notebook"
-              echo "- **Failed:** `$folder` (see job logs)" >> "$GITHUB_STEP_SUMMARY"
+              printf -- '- **Failed:** `%s` (see job logs)\n' "$folder" >> "$GITHUB_STEP_SUMMARY"
               failures=$((failures + 1))
             fi
           done < <(find ex-* -maxdepth 1 -type f -name '*.ipynb' -print | sort)
@@ -75,6 +78,10 @@ jobs:
             echo "- Failed: $failures"
           } >> "$GITHUB_STEP_SUMMARY"
 
+          if (( executed == 0 )); then
+            echo "No notebooks were executed." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
           if (( failures > 0 )); then
             exit 1
           fi
