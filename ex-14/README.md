@@ -1,91 +1,45 @@
-# EXERCISE – 14 (HIERARCHICAL CLUSTERING)
+# Exercise 14 — Hierarchical Clustering
 
-## Code
+**Course:** Machine Learning Lab  
+**Programme:** I M.Sc. Data Science · I Semester  
+**Department Number:** 26-PDS-002  
+**Student:** Joe Rakesh A · Loyola College, Chennai  
+**Academic Year:** 2026–2027
 
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
+## 1. Aim
+Perform hierarchical clustering on preprocessed heart disease data using Ward linkage and visualise the hierarchy with a dendrogram.
 
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
+## 2. Dataset
+- **Expected path:** `heart_disease_dataset.csv`
+- Obtain the dataset from an authorised source. Do not commit data that cannot legally be redistributed.
+- See the [dataset guide](../datasets/README.md).
 
-from scipy.cluster.hierarchy import (
-    dendrogram,
-    linkage
-)
+## 3. Algorithm / Workflow
+1. Load data and remove the Heart Disease target.
+2. Identify numeric and categorical features.
+3. Standardise numeric features and one-hot encode categorical features.
+4. Convert processed data to a dense array.
+5. Apply Ward linkage hierarchical clustering.
+6. Plot a truncated dendrogram showing the last 30 merges.
 
-df = pd.read_csv("heart_disease_dataset.csv")
+## 4. Implementation
+- [Original Python program](./ex-14.py)
+- [Jupyter notebook](./ex-14.ipynb)
 
-print("Dataset Shape:", df.shape)
-print("\nFirst 5 records:")
-print(df.head())
+The Python program is preserved as-is. The notebook splits its existing code into executable cells; it does not replace the original implementation.
 
-X = df.drop("Heart Disease", axis=1)
+## 5. Results
+**Result summary transcribed from the supplied practical record:**
 
-numeric_features = X.select_dtypes(
-    include=["int64", "float64"]
-).columns
+Ward linkage was applied to 1000 records with 27 processed features. The dendrogram illustrates how records merge into larger clusters.
 
-categorical_features = X.select_dtypes(
-    include=["object"]
-).columns
+This is a recorded result, not a fresh run performed during this update. Run the notebook with the correct dataset and dependencies to generate current outputs and plots.
 
-preprocessor = ColumnTransformer(
-    transformers=[
-        ("num", StandardScaler(), numeric_features),
-        ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_features)
-    ]
-)
+## 6. Interpretation and validation
+Interpret outputs from your run and document limitations. Check preprocessing, feature scaling, distance/linkage parameters and cluster interpretation as relevant to the method.
 
-X_processed = preprocessor.fit_transform(X)
+## 7. Conclusion
+Summarise findings from your execution; do not report metrics that were not computed.
 
-# Check whether X_processed is sparse or already a NumPy array
-if hasattr(X_processed, "toarray"):
-    X_processed = X_processed.toarray()
-
-print("\nProcessed Data Shape:")
-print(X_processed.shape)
-
-linked = linkage(
-    X_processed,
-    method="ward"
-)
-
-plt.figure(figsize=(14, 7))
-
-dendrogram(
-    linked,
-    truncate_mode="lastp",
-    p=30,
-    leaf_rotation=90,
-    leaf_font_size=10,
-    show_contracted=True
-)
-
-plt.title("Hierarchical Clustering Dendrogram")
-plt.xlabel("Cluster / Data Points")
-plt.ylabel("Distance")
-
-plt.show()
-```
-
-## Output
-
-```text
-The program was executed on the Heart disease dataset (heart_disease_dataset.csv) and produced the following output:
-
-Dataset Shape: (1000, 16)
-
-First 5 records:
-   Age  Gender  ...   Chest Pain Type  Heart Disease
-0   75  Female  ...   Atypical Angina              1
-1   48    Male  ...    Typical Angina              0
-2   53    Male  ...   Atypical Angina              1
-3   69  Female  ...  Non-anginal Pain              0
-4   62  Female  ...      Asymptomatic              0
-
-[5 rows x 16 columns]
-
-Processed Data Shape:
-(1000, 27)
-```
+## 8. Reproducibility
+Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
