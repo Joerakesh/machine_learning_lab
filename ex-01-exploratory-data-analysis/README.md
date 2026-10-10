@@ -51,4 +51,4 @@ EDA shows the Titanic dataset contains missing values in Cabin, Age and Embarked
 
 ## 8. Reproducibility
 
-The GitHub Actions workflow uses Python 3.12. The notebook reads `datasets/titanic.csv` from this repository's `main` branch. `requirements.txt` lists the required libraries but does not pin their versions. For a reproducible run, record the dataset commit or file checksum and capture `python --version` and `python -m pip freeze`.
+The GitHub Actions workflow uses Python 3.12. The notebook reads `datasets/titanic.csv` from this repository's `main` branch. `requirements.txt` lists required libraries without pinning their versions. For reproducibility, record the dataset commit or file checksum and capture `python --version` and `python -m pip freeze`.
