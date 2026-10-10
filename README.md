@@ -3,9 +3,11 @@
 <img src="https://eatright.loyolacollege.edu/_app/immutable/assets/loyola-logo.C2NjGpy4.webp" alt="Loyola College logo" width="130" />
 
 # LOYOLA COLLEGE, CHENNAI
+
 ### Department of Data Science
 
 # Machine Learning Laboratory
+
 **M.Sc. Data Science · I Semester · Academic Year 2026–2027**
 
 **Practical Record & Code Portfolio**
@@ -16,15 +18,15 @@
 
 ## Student Details
 
-| Field | Details |
-|---|---|
-| **Name** | Joe Rakesh A |
-| **Department Number (D.No.)** | **26-PDS-002** |
-| **Programme / Class** | I M.Sc. Data Science |
-| **Semester** | I Semester |
-| **Course Title** | Machine Learning Lab |
-| **Institution** | Loyola College, Chennai – 600 034 |
-| **Academic Year** | 2026–2027 |
+| Field                         | Details                           |
+| ----------------------------- | --------------------------------- |
+| **Name**                      | Joe Rakesh A                      |
+| **Department Number (D.No.)** | **26-PDS-002**                    |
+| **Programme / Class**         | I M.Sc. Data Science              |
+| **Semester**                  | I Semester                        |
+| **Course Title**              | Machine Learning Lab              |
+| **Institution**               | Loyola College, Chennai – 600 034 |
+| **Academic Year**             | 2026–2027                         |
 
 > This repository accompanies the Machine Learning Lab practical record for the Department of Data Science. The exercise titles, aims, algorithms and reported results are based on the supplied practical record. The Python scripts are preserved as the original implementations.
 
@@ -36,28 +38,29 @@ The notebooks are designed to display code, tables, charts and output when run i
 
 ## Exercise Index
 
-| Ex. No. | Experiment | Main concepts | Python | Notebook |
-|---:|---|---|---|---|
-| 01 | Exploratory Data Analysis | Missing values, descriptive statistics, visualisation, correlation | [Program](ex-01-exploratory-data-analysis/ex-01.py) · [README](ex-01-exploratory-data-analysis/README.md) | [Notebook](ex-01-exploratory-data-analysis/ex-01.ipynb) |
-| 02 | Simple Linear Regression | Regression line, slope, intercept, MSE, R² | [Program](ex-02-simple-linear-regression/ex-02.py) · [README](ex-02-simple-linear-regression/README.md) | [Notebook](ex-02-simple-linear-regression/ex-02.ipynb) |
-| 03 | Multiple Linear Regression | Multiple predictors, encoding, regression metrics | [Program](ex-03-multiple-linear-regression/ex-03.py) · [README](ex-03-multiple-linear-regression/README.md) | [Notebook](ex-03-multiple-linear-regression/ex-03.ipynb) |
-| 04 | Polynomial Regression | Polynomial features, degree-2 curve, regression metrics | [Program](ex-04-polynomial-regression/ex-04.py) · [README](ex-04-polynomial-regression/README.md) | [Notebook](ex-04-polynomial-regression/ex-04.ipynb) |
-| 05 | Ridge Regression | L2 regularisation, polynomial features, overfitting | [Program](ex-05-ridge-regression/ex-05.py) · [README](ex-05-ridge-regression/README.md) | [Notebook](ex-05-ridge-regression/ex-05.ipynb) |
-| 06 | Lasso Regression | L1 regularisation, feature shrinkage, overfitting | [Program](ex-06-lasso-regression/ex-06.py) · [README](ex-06-lasso-regression/README.md) | [Notebook](ex-06-lasso-regression/ex-06.ipynb) |
-| 07 | Logistic Regression | Binary classification, confusion matrix, ROC-AUC | [Program](ex-07-logistic-regression/ex-07.py) · [README](ex-07-logistic-regression/README.md) | [Notebook](ex-07-logistic-regression/ex-07.ipynb) |
-| 08 | K-Nearest Neighbors | Distance-based classification, choosing K | [Program](ex-08-k-nearest-neighbors/ex-08.py) · [README](ex-08-k-nearest-neighbors/README.md) | [Notebook](ex-08-k-nearest-neighbors/ex-08.ipynb) |
-| 09 | Decision Tree | Tree classifier, classification metrics, visualisation | [Program](ex-09-decision-tree/ex-09.py) · [README](ex-09-decision-tree/README.md) | [Notebook](ex-09-decision-tree/ex-09.ipynb) |
-| 10 | Random Forest | Ensemble classification, ROC-AUC | [Program](ex-10-random-forest/ex-10.py) · [README](ex-10-random-forest/README.md) | [Notebook](ex-10-random-forest/ex-10.ipynb) |
-| 11 | Support Vector Machine | Linear, polynomial, RBF and sigmoid kernels | [Program](ex-11-support-vector-machine/ex-11.py) · [README](ex-11-support-vector-machine/README.md) | [Notebook](ex-11-support-vector-machine/ex-11.ipynb) |
-| 12 | Hyperparameter Tuning | GridSearchCV, cross-validation, SVC | [Program](ex-12-hyperparameter-tuning/ex-12.py) · [README](ex-12-hyperparameter-tuning/README.md) | [Notebook](ex-12-hyperparameter-tuning/ex-12.ipynb) |
-| 13 | K-Means Clustering | Inertia, Elbow Method, cluster labels | [Program](ex-13-k-means-clustering/ex-13.py) · [README](ex-13-k-means-clustering/README.md) | [Notebook](ex-13-k-means-clustering/ex-13.ipynb) |
-| 14 | Hierarchical Clustering | Ward linkage, agglomerative clustering, dendrogram | [Program](ex-14-hierarchical-clustering/ex-14.py) · [README](ex-14-hierarchical-clustering/README.md) | [Notebook](ex-14-hierarchical-clustering/ex-14.ipynb) |
-| 15 | DBSCAN Clustering | Density-based clusters, noise points, PCA visualisation | [Program](ex-15-dbscan-clustering/ex-15.py) · [README](ex-15-dbscan-clustering/README.md) | [Notebook](ex-15-dbscan-clustering/ex-15.ipynb) |
-| 16 | Principal Component Analysis | Dimensionality reduction, principal components, explained variance | [Program](ex-16-principal-component-analysis/ex-16.py) · [README](ex-16-principal-component-analysis/README.md) | [Notebook](ex-16-principal-component-analysis/ex-16.ipynb) |
+| Ex. No. | Experiment                   | Main concepts                                                      | Python                                                                                                          | Notebook                                                   |
+| ------: | ---------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+|      01 | Exploratory Data Analysis    | Missing values, descriptive statistics, visualisation, correlation | [Program](ex-01-exploratory-data-analysis/ex-01.py) · [README](ex-01-exploratory-data-analysis/README.md)       | [Notebook](ex-01-exploratory-data-analysis/ex-01.ipynb)    |
+|      02 | Simple Linear Regression     | Regression line, slope, intercept, MSE, R²                         | [Program](ex-02-simple-linear-regression/ex-02.py) · [README](ex-02-simple-linear-regression/README.md)         | [Notebook](ex-02-simple-linear-regression/ex-02.ipynb)     |
+|      03 | Multiple Linear Regression   | Multiple predictors, encoding, regression metrics                  | [Program](ex-03-multiple-linear-regression/ex-03.py) · [README](ex-03-multiple-linear-regression/README.md)     | [Notebook](ex-03-multiple-linear-regression/ex-03.ipynb)   |
+|      04 | Polynomial Regression        | Polynomial features, degree-2 curve, regression metrics            | [Program](ex-04-polynomial-regression/ex-04.py) · [README](ex-04-polynomial-regression/README.md)               | [Notebook](ex-04-polynomial-regression/ex-04.ipynb)        |
+|      05 | Ridge Regression             | L2 regularisation, polynomial features, overfitting                | [Program](ex-05-ridge-regression/ex-05.py) · [README](ex-05-ridge-regression/README.md)                         | [Notebook](ex-05-ridge-regression/ex-05.ipynb)             |
+|      06 | Lasso Regression             | L1 regularisation, feature shrinkage, overfitting                  | [Program](ex-06-lasso-regression/ex-06.py) · [README](ex-06-lasso-regression/README.md)                         | [Notebook](ex-06-lasso-regression/ex-06.ipynb)             |
+|      07 | Logistic Regression          | Binary classification, confusion matrix, ROC-AUC                   | [Program](ex-07-logistic-regression/ex-07.py) · [README](ex-07-logistic-regression/README.md)                   | [Notebook](ex-07-logistic-regression/ex-07.ipynb)          |
+|      08 | K-Nearest Neighbors          | Distance-based classification, choosing K                          | [Program](ex-08-k-nearest-neighbors/ex-08.py) · [README](ex-08-k-nearest-neighbors/README.md)                   | [Notebook](ex-08-k-nearest-neighbors/ex-08.ipynb)          |
+|      09 | Decision Tree                | Tree classifier, classification metrics, visualisation             | [Program](ex-09-decision-tree/ex-09.py) · [README](ex-09-decision-tree/README.md)                               | [Notebook](ex-09-decision-tree/ex-09.ipynb)                |
+|      10 | Random Forest                | Ensemble classification, ROC-AUC                                   | [Program](ex-10-random-forest/ex-10.py) · [README](ex-10-random-forest/README.md)                               | [Notebook](ex-10-random-forest/ex-10.ipynb)                |
+|      11 | Support Vector Machine       | Linear, polynomial, RBF and sigmoid kernels                        | [Program](ex-11-support-vector-machine/ex-11.py) · [README](ex-11-support-vector-machine/README.md)             | [Notebook](ex-11-support-vector-machine/ex-11.ipynb)       |
+|      12 | Hyperparameter Tuning        | GridSearchCV, cross-validation, SVC                                | [Program](ex-12-hyperparameter-tuning/ex-12.py) · [README](ex-12-hyperparameter-tuning/README.md)               | [Notebook](ex-12-hyperparameter-tuning/ex-12.ipynb)        |
+|      13 | K-Means Clustering           | Inertia, Elbow Method, cluster labels                              | [Program](ex-13-k-means-clustering/ex-13.py) · [README](ex-13-k-means-clustering/README.md)                     | [Notebook](ex-13-k-means-clustering/ex-13.ipynb)           |
+|      14 | Hierarchical Clustering      | Ward linkage, agglomerative clustering, dendrogram                 | [Program](ex-14-hierarchical-clustering/ex-14.py) · [README](ex-14-hierarchical-clustering/README.md)           | [Notebook](ex-14-hierarchical-clustering/ex-14.ipynb)      |
+|      15 | DBSCAN Clustering            | Density-based clusters, noise points, PCA visualisation            | [Program](ex-15-dbscan-clustering/ex-15.py) · [README](ex-15-dbscan-clustering/README.md)                       | [Notebook](ex-15-dbscan-clustering/ex-15.ipynb)            |
+|      16 | Principal Component Analysis | Dimensionality reduction, principal components, explained variance | [Program](ex-16-principal-component-analysis/ex-16.py) · [README](ex-16-principal-component-analysis/README.md) | [Notebook](ex-16-principal-component-analysis/ex-16.ipynb) |
 
 ## Learning Outcomes
 
 Through these practical exercises, the lab record covers:
+
 - Exploring and summarising datasets, identifying missing values and visualising relationships.
 - Building linear, polynomial and regularised regression models.
 - Training and evaluating classification models using appropriate metrics.
@@ -88,12 +91,14 @@ cd machine_learning_lab
 ### 2. Create a virtual environment
 
 Linux / macOS:
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 ```
 
 Windows PowerShell:
+
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
@@ -113,15 +118,18 @@ Place each dataset at the relative path expected by its program. Current expecte
 ### 5. Run a Python program or notebook
 
 For a standalone program:
+
 ```bash
 cd ex-01
 python ex-01.py
 ```
 
 To run a notebook, start Jupyter from the repository root:
+
 ```bash
 jupyter notebook
 ```
+
 Then open the notebook for the relevant exercise. Run cells from top to bottom. Saved outputs will appear in the notebook after execution; GitHub can display saved notebook outputs once the executed notebook is committed.
 
 ## Results & Academic Notes
@@ -134,11 +142,7 @@ Each exercise README includes its aim, algorithm/workflow, dataset path, links t
 - **Experiment READMEs:** consistent academic documentation.
 - **Dataset guide:** expected file names and data-source reminders.
 - **Dependencies:** [requirements.txt](requirements.txt) lists the shared lab libraries.
-- **Output figures:** [assets/outputs/README.md](assets/outputs/README.md) explains where to keep generated charts.
-- **GitHub Actions:** Python syntax checks and automated notebook execution when datasets are uploaded.
-- **Issue templates:** structured bug reports and documentation questions.
-- **Citation metadata:** [CITATION.cff](CITATION.cff).
-- **License:** [LICENSE](LICENSE); review whether these terms fit the rights and intended reuse of all materials.
+- **GitHub Actions:** Python syntax checks and automated notebook execution.
 
 ## Maintainer
 
@@ -150,6 +154,6 @@ Department of Data Science · Loyola College, Chennai.
 
 <div align="center">
 
-*Machine Learning Laboratory · I M.Sc. Data Science · 2026–2027*
+_Machine Learning Laboratory · I M.Sc. Data Science · 2026–2027_
 
 </div>
