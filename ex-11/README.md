@@ -1,250 +1,46 @@
-# EXERCISE – 11 (SUPPORT VECTOR MACHINE)
+# Exercise 11 — Support Vector Machine (SVM)
 
-## Code
+**Course:** Machine Learning Lab  
+**Programme:** I M.Sc. Data Science · I Semester  
+**Department Number:** 26-PDS-002  
+**Student:** Joe Rakesh A · Loyola College, Chennai  
+**Academic Year:** 2026–2027
 
-```python
-# Step 1: Import libraries
-import pandas as pd
-import matplotlib.pyplot as plt
+## 1. Aim
+Perform SVM classification using Linear, Polynomial, RBF and Sigmoid kernels and compare their performance.
 
-from sklearn.model_selection import train_test_split
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.pipeline import Pipeline
-from sklearn.svm import SVC
-from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    classification_report,
-    confusion_matrix
-)
+## 2. Dataset
+- **Expected path:** `heart_disease_dataset.csv`
+- Obtain the dataset from an authorised source. Do not commit data that cannot legally be redistributed.
+- See the [dataset guide](../datasets/README.md).
 
-df = pd.read_csv("heart_disease_dataset.csv")
+## 3. Algorithm / Workflow
+1. Load data and separate the Heart Disease target.
+2. Identify numeric and categorical features.
+3. Scale numeric features and one-hot encode categorical features.
+4. Split 80:20 with stratification.
+5. Train SVM models with all four kernels.
+6. Calculate accuracy, precision, recall and F1 for each.
+7. Compare results in a table and bar plot.
 
-print("Dataset Shape:", df.shape)
-print("\nFirst 5 records:")
-print(df.head())
+## 4. Implementation
+- [Original Python program](./ex-11.py)
+- [Jupyter notebook](./ex-11.ipynb)
 
-X = df.drop("Heart Disease", axis=1)
-y = df["Heart Disease"]
+The Python program is preserved as-is. The notebook splits its existing code into executable cells; it does not replace the original implementation.
 
-numeric_features = X.select_dtypes(include=["int64", "float64"]).columns
-categorical_features = X.select_dtypes(include=["object"]).columns
+## 5. Results
+**Result summary transcribed from the supplied practical record:**
 
-print("\nNumerical Features:")
-print(list(numeric_features))
+The polynomial kernel performed best with accuracy 0.925 and F1 0.9007, followed by RBF (accuracy 0.905), linear (0.875) and sigmoid (0.825).
 
-print("\nCategorical Features:")
-print(list(categorical_features))
+This is a recorded result, not a fresh run performed during this update. Run the notebook with the correct dataset and dependencies to generate current outputs and plots.
 
-preprocessor = ColumnTransformer(
-    transformers=[
-        ("num", StandardScaler(), numeric_features),
-        ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_features)
-    ]
-)
+## 6. Interpretation and validation
+Interpret outputs from your run and document limitations. Check for leakage, duplicates and evaluation design before interpreting unexpectedly high classification scores as generalisable.
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X,
-    y,
-    test_size=0.20,
-    random_state=42,
-    stratify=y
-)
+## 7. Conclusion
+Summarise findings from your execution; do not report metrics that were not computed.
 
-kernels = ["linear", "poly", "rbf", "sigmoid"]
-
-results = []
-
-for kernel in kernels:
-
-    model = Pipeline(
-        steps=[
-            ("preprocessor", preprocessor),
-            ("svm", SVC(kernel=kernel, random_state=42))
-        ]
-    )
-
-    model.fit(X_train, y_train)
-
-    y_pred = model.predict(X_test)
-
-    accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred, zero_division=0)
-    recall = recall_score(y_test, y_pred, zero_division=0)
-    f1 = f1_score(y_test, y_pred, zero_division=0)
-
-    results.append([
-        kernel,
-        accuracy,
-        precision,
-        recall,
-        f1
-    ])
-
-    print("\n======================================")
-    print("SVM Kernel:", kernel)
-    print("======================================")
-
-    print("Accuracy :", accuracy)
-    print("Precision:", precision)
-    print("Recall   :", recall)
-    print("F1 Score :", f1)
-
-    print("\nClassification Report:")
-    print(classification_report(
-        y_test,
-        y_pred,
-        zero_division=0
-    ))
-
-results_df = pd.DataFrame(
-    results,
-    columns=[
-        "Kernel",
-        "Accuracy",
-        "Precision",
-        "Recall",
-        "F1 Score"
-    ]
-)
-
-print("\n\nKernel Comparison:")
-print(results_df)
-
-plt.figure(figsize=(8, 5))
-
-plt.bar(
-    results_df["Kernel"],
-    results_df["Accuracy"]
-)
-
-plt.xlabel("SVM Kernel")
-plt.ylabel("Accuracy")
-plt.title("SVM Performance with Different Kernels")
-plt.ylim(0, 1)
-
-plt.show()
-
-# ------------------------------------------------------------
-# Result
-# ------------------------------------------------------------
-
-print("\nResult:")
-print("SVM classification was successfully performed")
-print("using Linear, Polynomial, RBF and Sigmoid kernels.")
-```
-
-## Output
-
-```text
-The program was executed on the Heart disease dataset (heart_disease_dataset.csv) and produced the following output:
-
-Dataset Shape: (1000, 16)
-
-First 5 records:
-   Age  Gender  ...   Chest Pain Type  Heart Disease
-0   75  Female  ...   Atypical Angina              1
-1   48    Male  ...    Typical Angina              0
-2   53    Male  ...   Atypical Angina              1
-3   69  Female  ...  Non-anginal Pain              0
-4   62  Female  ...      Asymptomatic              0
-
-[5 rows x 16 columns]
-
-Numerical Features:
-['Age', 'Cholesterol', 'Blood Pressure', 'Heart Rate', 'Exercise Hours', 'Stress Level', 'Blood Sugar']
-
-Categorical Features:
-['Gender', 'Smoking', 'Alcohol Intake', 'Family History', 'Diabetes', 'Obesity', 'Exercise Induced Angina', 'Chest Pain Type']
-
-======================================
-SVM Kernel: linear
-======================================
-Accuracy : 0.875
-Precision: 0.8732394366197183
-Recall   : 0.7948717948717948
-F1 Score : 0.8322147651006712
-
-Classification Report:
-              precision    recall  f1-score   support
-
-           0       0.88      0.93      0.90       122
-           1       0.87      0.79      0.83        78
-
-    accuracy                           0.88       200
-   macro avg       0.87      0.86      0.87       200
-weighted avg       0.87      0.88      0.87       200
-
-
-======================================
-SVM Kernel: poly
-======================================
-Accuracy : 0.925
-Precision: 0.9315068493150684
-Recall   : 0.8717948717948718
-F1 Score : 0.9006622516556292
-
-Classification Report:
-              precision    recall  f1-score   support
-
-           0       0.92      0.96      0.94       122
-           1       0.93      0.87      0.90        78
-
-    accuracy                           0.93       200
-   macro avg       0.93      0.92      0.92       200
-weighted avg       0.93      0.93      0.92       200
-
-
-======================================
-SVM Kernel: rbf
-======================================
-Accuracy : 0.905
-Precision: 0.8933333333333333
-Recall   : 0.8589743589743589
-F1 Score : 0.8758169934640523
-
-Classification Report:
-              precision    recall  f1-score   support
-
-           0       0.91      0.93      0.92       122
-           1       0.89      0.86      0.88        78
-
-    accuracy                           0.91       200
-   macro avg       0.90      0.90      0.90       200
-weighted avg       0.90      0.91      0.90       200
-
-
-======================================
-SVM Kernel: sigmoid
-======================================
-Accuracy : 0.825
-Precision: 0.8028169014084507
-Recall   : 0.7307692307692307
-F1 Score : 0.7651006711409396
-
-Classification Report:
-              precision    recall  f1-score   support
-
-           0       0.84      0.89      0.86       122
-           1       0.80      0.73      0.77        78
-
-    accuracy                           0.82       200
-   macro avg       0.82      0.81      0.81       200
-weighted avg       0.82      0.82      0.82       200
-
-
-
-Kernel Comparison:
-    Kernel  Accuracy  Precision    Recall  F1 Score
-0   linear     0.875   0.873239  0.794872  0.832215
-1     poly     0.925   0.931507  0.871795  0.900662
-2      rbf     0.905   0.893333  0.858974  0.875817
-3  sigmoid     0.825   0.802817  0.730769  0.765101
-
-Result:
-SVM classification was successfully performed
-using Linear, Polynomial, RBF and Sigmoid kernels.
-```
+## 8. Reproducibility
+Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
