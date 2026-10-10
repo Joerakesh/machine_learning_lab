@@ -39,7 +39,9 @@ This is a recorded result, not a fresh run performed during this update. Run the
 Interpret outputs from your run and document limitations. Check preprocessing, feature scaling, distance/linkage parameters and cluster interpretation as relevant to the method.
 
 ## 7. Conclusion
-Summarise findings from your execution; do not report metrics that were not computed.
+
+Agglomerative hierarchical clustering builds nested groups, and the dendrogram shows the order and distance at which clusters merge. The recorded experiment used Ward linkage on 1,000 records and 27 processed features. The number of meaningful clusters depends on where the dendrogram is cut and on feature preprocessing and scaling.
 
 ## 8. Reproducibility
-Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
+
+The GitHub Actions workflow uses Python 3.12. The notebook reads `datasets/fish.csv` from this repository's `main` branch. Dependencies are listed in `requirements.txt` without pinned versions. Record the repository commit or dataset checksum, `python --version`, and `python -m pip freeze`; preserve selected features, preprocessing and linkage settings.
