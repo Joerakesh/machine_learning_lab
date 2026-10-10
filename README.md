@@ -103,7 +103,7 @@ python -m venv .venv
 
 ```bash
 python -m pip install --upgrade pip
-python -m pip install pandas numpy matplotlib seaborn scikit-learn scipy jupyter
+python -m pip install -r requirements.txt
 ```
 
 ### 4. Add datasets
@@ -133,6 +133,8 @@ Each exercise README includes its aim, algorithm/workflow, dataset path, links t
 - **Exercise notebooks:** interactive code and rendered outputs after execution.
 - **Experiment READMEs:** consistent academic documentation.
 - **Dataset guide:** expected file names and data-source reminders.
+- **Dependencies:** [requirements.txt](requirements.txt) lists the shared lab libraries.
+- **Output figures:** [assets/outputs/README.md](assets/outputs/README.md) explains where to keep generated charts.
 - **GitHub Actions:** lightweight Python syntax checks.
 - **Issue templates:** structured bug reports and documentation questions.
 - **Citation metadata:** [CITATION.cff](CITATION.cff).
