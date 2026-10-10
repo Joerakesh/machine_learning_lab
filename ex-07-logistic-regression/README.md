@@ -41,7 +41,9 @@ This is a recorded result, not a fresh run performed during this update. Run the
 Interpret outputs from your run and document limitations. Check for leakage, duplicates and evaluation design before interpreting unexpectedly high classification scores as generalisable.
 
 ## 7. Conclusion
-Summarise findings from your execution; do not report metrics that were not computed.
+
+Logistic Regression provides a baseline for binary heart-disease classification. The recorded precision, recall, F1 and ROC-AUC describe different aspects of performance and should be considered together; the results are not proof of clinical usefulness and require validation on representative, independent data.
 
 ## 8. Reproducibility
-Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
+
+The GitHub Actions workflow uses Python 3.12. The notebook reads `datasets/heart_disease_dataset.csv` from this repository's `main` branch. Dependencies are listed in `requirements.txt` without pinned versions. Record the repository commit or dataset checksum, `python --version`, and `python -m pip freeze`. Check preprocessing is fitted only on training data.
