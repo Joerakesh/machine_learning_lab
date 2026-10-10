@@ -39,7 +39,9 @@ This is a recorded result, not a fresh run performed during this update. Run the
 Interpret outputs from your run and document limitations. Check preprocessing, feature scaling, distance/linkage parameters and cluster interpretation as relevant to the method.
 
 ## 7. Conclusion
-Summarise findings from your execution; do not report metrics that were not computed.
+
+DBSCAN identifies dense regions and marks points outside them as noise. The practical record reports that eps=1.5 and min_samples=5 classified all 1,000 records as noise, meaning those settings did not identify clusters in the processed feature space. Investigate feature scaling and the distance distribution, then tune parameters using domain context rather than assuming that no clusters exist.
 
 ## 8. Reproducibility
-Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
+
+The GitHub Actions workflow uses Python 3.12. The notebook reads `datasets/fish.csv` from this repository's `main` branch. Dependencies are listed in `requirements.txt` without pinned versions. Record the repository commit or dataset checksum, `python --version`, and `python -m pip freeze`; preserve feature selection, scaling, eps and min_samples.
