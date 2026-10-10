@@ -40,7 +40,9 @@ This is a recorded result, not a fresh run performed during this update. Run the
 Interpret outputs from your run and document limitations. Check for leakage, duplicates and evaluation design before interpreting unexpectedly high classification scores as generalisable.
 
 ## 7. Conclusion
-Summarise findings from your execution; do not report metrics that were not computed.
+
+A Decision Tree learns rule-based splits for classification and can be visualised for interpretation. The practical record reports perfect test metrics, which should be treated cautiously until target construction, duplicate rows, preprocessing, train/test separation and possible leakage are checked. Perfect scores do not by themselves demonstrate generalisation.
 
 ## 8. Reproducibility
-Record Python version, dataset source/version and dependencies. Run from this exercise directory so relative paths resolve as expected.
+
+The GitHub Actions workflow uses Python 3.12. The notebook reads `datasets/heart_disease_dataset.csv` from this repository's `main` branch. Dependencies are listed in `requirements.txt` without pinned versions. Record the repository commit or dataset checksum, `python --version`, and `python -m pip freeze`; verify the split and any preprocessing for leakage.
